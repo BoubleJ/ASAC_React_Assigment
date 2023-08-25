@@ -8,16 +8,14 @@ module.exports = withImages({
   webpack(config, { buildId, dev, isServer, defaultLoaders, webpack }) {
     // SVG 파일을 처리하기 위한 로더 추가
 
-    plugins: [require("tailwindcss")],
-      // Tailwind CSS 플러그인 추가
-      config.module.rules.push({
-        test: /\.svg$/,
-        use: [
-          {
-            loader: "svg-react-loader",
-          },
-        ],
-      });
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "svg-react-loader",
+        },
+      ],
+    });
 
     return config;
   },
