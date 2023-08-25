@@ -1,0 +1,8 @@
+{
+  "jsxSingleQuote": true,
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "embeddedLanguageFormatting": "auto",
+  "semi": false,
+  "htmlWhitespaceSensitivity": "css"
+}
