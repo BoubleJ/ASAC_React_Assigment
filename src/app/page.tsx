@@ -1,9 +1,36 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import { Stack, Button } from '@mui/material'
+import AbcIcon from '@mui/icons-material/Abc';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+
 
 export default function Home() {
   return (
     <main className={styles.main}>
+<div className="m-[5px]"></div>
+<h1 className="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+  <div className="w-12 h-10 text-white bg-gray-400">제발 좀 떠라!!!</div>
+
+<Stack spacing={2} direction="row">
+          <Button variant="text">Text</Button>
+          <Button variant="contained">Contained</Button>
+          <Button variant="outlined">Outlined</Button>
+        </Stack>
+       
+
+        <Button variant="contained" color="primary">
+        Save
+      </Button>
+
+      <IconButton aria-label="delete">
+        <DeleteIcon/>
+      </IconButton>
+
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
