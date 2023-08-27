@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image'
 import styles from './page.module.css'
 import { Stack, Button } from '@mui/material'
@@ -5,118 +6,109 @@ import AbcIcon from '@mui/icons-material/Abc';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
+import { useState } from 'react';
+
+
+function Btn(props: { title: string, bg_color: string, color: string }) {
+  return (
+    <button
+    className={styles.snsBtn}
+      style={{ backgroundColor: props.bg_color, color: props.color }}
+    >
+     
+      {props.title}로 로그인
+    </button>
+  );
+}
+
 
 
 export default function Home() {
+
+  let [LoginSNS, setLoginSNS] = useState<string[]>([" 카카오톡으", " Google", " 네이버"]);
+
+
+
+
+
   return (
-    <main className={styles.main}>
-<div className="m-[5px]"></div>
-<h1 className="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-  <div className="w-12 h-10 text-white bg-gray-400">제발 좀 떠라!!!</div>
+    <main className={styles.background}>
+ <section>
+        <form>
+          <input type="hidden"></input>
+          <div className={styles.title_logo}>
+            <strong className={styles.logo}>
+              <a href="#">여기어때</a>
+            </strong>
+          </div>
 
-<Stack spacing={2} direction="row">
-          <Button variant="text">Text</Button>
-          <Button variant="contained">Contained</Button>
-          <Button variant="outlined">Outlined</Button>
-        </Stack>
-       
+          <div className={styles.snsBtn_box}>
+            <Btn
+              title={LoginSNS[0]}
+              bg_color="rgb(252,229,30)"
+              color="black"
+            ></Btn>
+            <Btn
+              title={LoginSNS[1]}
+              bg_color="rgb(24,119,242)"
+              color="white"
+            ></Btn>
+            <Btn
+              title={LoginSNS[2]}
+              bg_color="rgb(40,209,17)"
+              color="white"
+            ></Btn>
+          </div>
 
-        <Button variant="contained" color="primary">
-        Save
-      </Button>
+          <div className={styles.or_box}>
+            <p className={styles.space_or}>
+              <span>또는</span>
+            </p>
+          </div>
 
-      <IconButton aria-label="delete">
-        <DeleteIcon/>
-      </IconButton>
-
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+          <div className={styles.login_input}>
+            <input
+              type="email"
+              name="id"
+              placeholder="이메일 주소"
+              data-msg-required="이메일 주소를 입력해 주세요."
             />
-          </a>
-        </div>
-      </div>
+          </div>
+          <div className={styles.login_input}>
+            <input
+              type="password"
+              name="pw"
+              placeholder="비밀번호"
+              required
+              className="required"
+              data-msg-required="비밀번호를 입력해 주세요."
+            />
+          </div>
+          <div className={`${styles.snsBtn_box} ${styles.login_btn}`}>
+            <button className={styles.snsBtn} type="submit">
+              로그인
+            </button>
+          </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+          <div className={styles.footer_box}>
+            <div className={styles.join_box}>
+              <div className={styles.textbox}>
+                <a href="https://www.goodchoice.kr/user/join">
+                  <span>비밀번호 재설정</span>
+                </a>
+              </div>
+            </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+            <div className={styles.join_box}>
+              <div className={styles.textbox}>
+                <a href="https://www.goodchoice.kr/user/join">
+                  <span>회원가입</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
     </main>
   )
 }
