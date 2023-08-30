@@ -1,11 +1,7 @@
-'use client';
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
-import { Stack, Button } from '@mui/material'
-import AbcIcon from '@mui/icons-material/Abc';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
+
 import { useState } from 'react';
 
 
@@ -23,9 +19,26 @@ function Btn(props: { title: string, bg_color: string, color: string }) {
 
 
 
+function Input (props) {
+  return (
+    <div className={styles.login_input}>
+    <input
+      type={props.type}
+      name={props.name}
+      placeholder={props.placeholder}
+     
+    />
+  </div>
+
+  )
+}
+
+
+
+
 export default function Home() {
 
-  let [LoginSNS, setLoginSNS] = useState<string[]>([" 카카오톡으", " Google", " 네이버"]);
+  let [LoginSNS, setLoginSNS] = useState<string[]>([" 카카오톡으", " Google"]);
 
 
 
@@ -53,11 +66,7 @@ export default function Home() {
               bg_color="rgb(24,119,242)"
               color="white"
             ></Btn>
-            <Btn
-              title={LoginSNS[2]}
-              bg_color="rgb(40,209,17)"
-              color="white"
-            ></Btn>
+            
           </div>
 
           <div className={styles.or_box}>
@@ -66,24 +75,19 @@ export default function Home() {
             </p>
           </div>
 
-          <div className={styles.login_input}>
-            <input
-              type="email"
-              name="id"
-              placeholder="이메일 주소"
-              data-msg-required="이메일 주소를 입력해 주세요."
-            />
-          </div>
-          <div className={styles.login_input}>
-            <input
-              type="password"
-              name="pw"
-              placeholder="비밀번호"
-              required
-              className="required"
-              data-msg-required="비밀번호를 입력해 주세요."
-            />
-          </div>
+          <Input 
+          type="email"
+      name="id"
+      placeholder="이메일 주소"
+   ></Input>
+
+
+      <Input
+      type="password"
+  name="pw"
+  placeholder="비밀번호"
+></Input>
+         
           <div className={`${styles.snsBtn_box} ${styles.login_btn}`}>
             <button className={styles.snsBtn} type="submit">
               로그인
