@@ -56,14 +56,14 @@ export default function SignUp() {
       //이메일형식불일치
       alert('이메일 형식이 올바르지 않습니다.');
 
-      console.log(emailInputRef.current);
       emailInputRef.current.focus();
+      //이메일input focus
     } else if (!isValidPassword(password)) {
       //비밀번호 형식 불일치
       alert('비밀번호 형식이 올바르지 않습니다.');
 
-      console.log(passwordInputRef.current);
       passwordInputRef.current.focus();
+      //비밀번호input focus
     } else {
       //회원가입 성공시
       console.log('success');
