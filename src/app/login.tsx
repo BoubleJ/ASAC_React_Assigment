@@ -37,50 +37,34 @@ const theme = createTheme();
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
-
-  const handleSubmit = event => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-
-    setEmail(data.get('email'));
-    setPassword(data.get('password'));
-    handleSignUp();
-  };
-
-  const handleSignUp = () => {
-    // 회원가입유효성검사
-    if (!isValidEmail(email)) {
-      //이메일형식불일치
-      alert('이메일 형식이 올바르지 않습니다.');
-
-      emailInputRef.current.focus();
-      //이메일input focus
-    } else if (!isValidPassword(password)) {
-      //비밀번호 형식 불일치
-      alert('비밀번호 형식이 올바르지 않습니다.');
-
-      passwordInputRef.current.focus();
-      //비밀번호input focus
-    } else {
-      //회원가입 성공시
-      console.log('success');
-    }
-  };
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const passwordInputRef = useRef<HTMLInputElement | null>(null);
 
   const isValidEmail = (email: string): boolean => {
-    //이메일유효성정규표현식
+    // 이메일 유효성 검사
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
   };
 
   const isValidPassword = (password: string): boolean => {
-    //비밀번호유효성정규표현식
+    // 패스워드 유효성 검사
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isValidEmail(email)) {
+      alert('이메일 형식이 올바르지 않습니다.');
+      emailInputRef.current.focus();
+    } else if (!isValidPassword(password)) {
+      alert('비밀번호 형식이 올바르지 않습니다.');
+      passwordInputRef.current.focus();
+    } else {
+      // 회원 가입 성공
+      console.log('success');
+    }
   };
 
   return (
@@ -138,6 +122,8 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   inputRef={emailInputRef}
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -150,6 +136,8 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   inputRef={passwordInputRef}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
