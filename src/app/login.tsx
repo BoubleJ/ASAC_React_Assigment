@@ -37,10 +37,10 @@ const theme = createTheme();
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const emailInputRef = useRef<HTMLInputElement | null>(null);
-  const passwordInputRef = useRef<HTMLInputElement | null>(null);
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = event => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -51,31 +51,33 @@ export default function SignUp() {
   };
 
   const handleSignUp = () => {
-    // 이곳에서 email과 password의 유효성을 검사하세요.
+    // 회원가입유효성검사
     if (!isValidEmail(email)) {
+      //이메일형식불일치
       alert('이메일 형식이 올바르지 않습니다.');
-      if (emailInputRef.current) {
-        emailInputRef.current.focus();
-      }
+
+      console.log(emailInputRef.current);
+      emailInputRef.current.focus();
     } else if (!isValidPassword(password)) {
+      //비밀번호 형식 불일치
       alert('비밀번호 형식이 올바르지 않습니다.');
-      if (passwordInputRef.current) {
-        passwordInputRef.current.focus();
-      }
+
+      console.log(passwordInputRef.current);
+      passwordInputRef.current.focus();
     } else {
-      // 회원 가입 로직을 처리하세요.
+      //회원가입 성공시
       console.log('success');
     }
   };
 
   const isValidEmail = (email: string): boolean => {
-    // 이메일 유효성 검사 로직을 구현하세요.
+    //이메일유효성정규표현식
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
     return emailRegex.test(email);
   };
 
   const isValidPassword = (password: string): boolean => {
-    // 패스워드 유효성 검사 로직을 구현하세요.
+    //비밀번호유효성정규표현식
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
@@ -135,6 +137,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  inputRef={emailInputRef}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -146,6 +149,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  inputRef={passwordInputRef}
                 />
               </Grid>
               <Grid item xs={12}>
