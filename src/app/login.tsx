@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useRef } from 'react';
+import { Mail } from '@mui/icons-material';
 
 function Copyright(props: any) {
   return (
@@ -40,6 +41,22 @@ export default function SignUp() {
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!isValidEmail(email)) {
+      console.log(email);
+      alert('이메일 형식이 올바르지 않습니다.');
+      emailInputRef.current.focus();
+    } else if (!isValidPassword(password)) {
+      console.log(password);
+      alert('비밀번호 형식이 올바르지 않습니다.');
+      passwordInputRef.current.focus();
+    } else {
+      // 회원 가입 성공
+      console.log('success');
+    }
+  };
+
   const isValidEmail = (email: string): boolean => {
     // 이메일 유효성 검사
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
@@ -51,20 +68,6 @@ export default function SignUp() {
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!isValidEmail(email)) {
-      alert('이메일 형식이 올바르지 않습니다.');
-      emailInputRef.current.focus();
-    } else if (!isValidPassword(password)) {
-      alert('비밀번호 형식이 올바르지 않습니다.');
-      passwordInputRef.current.focus();
-    } else {
-      // 회원 가입 성공
-      console.log('success');
-    }
   };
 
   return (
@@ -88,7 +91,9 @@ export default function SignUp() {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={e => {
+              handleSubmit(e);
+            }}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -122,8 +127,6 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   inputRef={emailInputRef}
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -136,8 +139,6 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   inputRef={passwordInputRef}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -154,6 +155,10 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => {
+                setEmail(emailInputRef.current.value);
+                setPassword(passwordInputRef.current.value);
+              }}
             >
               Sign Up
             </Button>
