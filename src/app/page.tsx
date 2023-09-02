@@ -9,17 +9,19 @@ import IconButton from '@mui/material/IconButton';
 import { useContext, useState, createContext } from 'react';
 import Detail from './modal';
 
-export let Context1 = createContext();
+import ModalProvider, { ModalContext } from './modal';
+
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  let [재고, 재고변경] = useState([10, 11, 12]);
+  const { show, hide } = useContext(ModalContext);
+  const router = useRouter();
+
   return (
     <div>
-      <Context1.Provider value={{ 재고 }}>
-        <Detail></Detail>
-      </Context1.Provider>
-
-      <SignUp></SignUp>
+      <ModalProvider>
+        <SignUp></SignUp>
+      </ModalProvider>
     </div>
   );
 }
