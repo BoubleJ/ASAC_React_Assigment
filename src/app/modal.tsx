@@ -2,9 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useState, useRef, createContext, useContext, Children } from 'react';
-import SignUp from './SignUp';
-import Context1 from './ModalContext';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -19,8 +16,6 @@ const style = {
 };
 
 export default function Modal2(props) {
-  const [state, dispatch] = useContext(Context1);
-
   return (
     <>
       <div>
@@ -32,7 +27,7 @@ export default function Modal2(props) {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {state.text}
+              {props.text}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <h5>입력에 오류가 있습니다.</h5>

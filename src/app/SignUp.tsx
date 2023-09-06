@@ -15,8 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useRef, useContext } from 'react';
-import Modal2 from './Modal';
-import Context1 from './ModalContext';
+import { Context1 } from '@/app/ModalContext';
 
 function Copyright(props: any) {
   return (
@@ -78,7 +77,6 @@ export default function SignUp() {
 
   return (
     <>
-      <Modal2 open={Modalopen} onclose={setModalopen(false)}></Modal2>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
