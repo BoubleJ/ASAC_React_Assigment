@@ -1,0 +1,16 @@
+{
+    "plugins": ["@typescript-eslint", "prettier"],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended",
+        "prettier/@typescript-eslint",
+        "next/core-web-vitals"
+    ],
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }]
+    }
+}

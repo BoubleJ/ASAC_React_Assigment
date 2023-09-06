@@ -1,14 +1,16 @@
 'use client';
 import Image from 'next/image';
-import SignUp from './login';
-import Modal2 from './Modal2';
+import SignUp from './SignUp';
+import Modal2 from './Modal';
+import ModalProvider from './ModalContext';
 
 export default function Home() {
   return (
     <div>
-      <SignUp></SignUp>
-
-      <Modal2></Modal2>
+      
+        <SignUp/>
+        <Modal2/>
+    
     </div>
   );
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,8 +14,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, useRef } from 'react';
-import Modal2 from './Modal2';
+import { useState, useRef, useContext } from 'react';
+import Modal2 from './Modal';
+import Context1 from './ModalContext';
 
 function Copyright(props: any) {
   return (
@@ -36,37 +39,27 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
-  const [SignUpModalOn, setSignUpModalOn] = useState(false);
+  const { state, dispatch } = useContext(Context1);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalDescription, setModalDescription] = useState('');
+  const [Modalopen, setModalopen] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isValidEmail(email)) {
-      console.log(email);
+      setModalopen(true);
       emailInputRef.current.focus();
-      alert('이메일 형식이 올바르지 않습니다.');
-      setModalTitle('경고');
-      setModalDescription('이메일 형식에 맞지 않습니다.');
-      setSignUpModalOn(true);
+      dispatch({ type: 'open' });
     } else if (!isValidPassword(password)) {
-      console.log(password);
+      setModalopen(true);
       passwordInputRef.current.focus();
-      alert('비밀번호 형식이 올바르지 않습니다.');
-      setModalTitle('오류');
-      setModalDescription('비밀번호 형식에 맞지 않습니다.');
-      setSignUpModalOn(true);
+      dispatch({ type: 'open' });
     } else {
       // 회원 가입 성공
       console.log('success');
-      setModalTitle('축하');
-      setModalDescription('회원가입에 성공했습니다.');
-      setSignUpModalOn(true);
     }
   };
 
@@ -85,12 +78,7 @@ export default function SignUp() {
 
   return (
     <>
-      <Modal2
-        open={SignUpModalOn}
-        onClose={() => setSignUpModalOn(false)}
-        title={modalTitle}
-        description={modalDescription}
-      ></Modal2>
+      <Modal2 open={Modalopen} onclose={setModalopen(false)}></Modal2>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -184,7 +172,7 @@ export default function SignUp() {
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="#" variant="body2">
-                    Already have an account? Sign in
+                    Already have an account? Sign
                   </Link>
                 </Grid>
               </Grid>
