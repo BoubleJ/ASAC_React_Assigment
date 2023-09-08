@@ -68,8 +68,7 @@ export default function SignUp() {
 
   const isValidPassword = (password: string): boolean => {
     // 패스워드 유효성 검사
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])(.{8,})$/;
     return passwordRegex.test(password);
   };
 
