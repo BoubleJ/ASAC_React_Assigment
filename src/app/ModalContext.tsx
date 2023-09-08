@@ -1,17 +1,53 @@
 'use client';
 
-import Modal2 from '@/app/modal';
+import Modal2 from './modal';
 import { createContext, useReducer } from 'react';
 
-const InitialState = { text: '', open: false };
+const InitialState = { title: '', description: '', open: false };
 
 export const Context1 = createContext(null);
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'open': {
+    case 'Idopen': {
       return {
-        text: '입력 오류',
+        title: '아이디 오류',
+        description: '아이디 형식이 맞지않습니다.',
+        open: true,
+      };
+    }
+    case 'PWopen': {
+      return {
+        title: '비밀번호 오류',
+        description: '비밀번호 형식이 맞지않습니다',
+        open: true,
+      };
+    }
+    case 'success': {
+      return {
+        title: '가입성공',
+        description: '회원가입에 성공했습니다',
+        open: true,
+      };
+    }
+    case 'Id_wrong': {
+      return {
+        title: '아이디 오류',
+        description: '아이디가 일치하지않습니다',
+        open: true,
+      };
+    }
+    case 'PW_wrong': {
+      return {
+        title: '비밀번호 오류',
+        description: '비밀번호가 일치하지않습니다',
+        open: true,
+      };
+    }
+    case 'login_success': {
+      return {
+        title: '로그인 성공',
+        description: '로그인에 성공했습니다.',
         open: true,
       };
     }
@@ -28,7 +64,7 @@ export default function ModalProvider({ children }) {
         {children}
         <Modal2
           open={state.open}
-          text={state.text}
+          title={state.title}
           onClose={() => {
             dispatch({ type: 'close' });
           }}

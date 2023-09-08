@@ -16,6 +16,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useRef, useContext } from 'react';
 import { Context1 } from '@/app/ModalContext';
+import Links from 'next/link';
 
 function Copyright(props: any) {
   return (
@@ -44,21 +45,18 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
-  const [Modalopen, setModalopen] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isValidEmail(email)) {
-      setModalopen(true);
       emailInputRef.current.focus();
-      dispatch({ type: 'open' });
+      dispatch({ type: 'Idopen' });
     } else if (!isValidPassword(password)) {
-      setModalopen(true);
       passwordInputRef.current.focus();
-      dispatch({ type: 'open' });
+      dispatch({ type: 'PWopen' });
     } else {
       // 회원 가입 성공
-      console.log('success');
+      dispatch({ type: 'success' });
     }
   };
 
@@ -177,6 +175,13 @@ export default function SignUp() {
             </Box>
           </Box>
           <Copyright sx={{ mt: 5 }} />
+          <Links href="/login">
+            <button
+              style={{ width: '100%', height: '50px', margin: '40px 0px' }}
+            >
+              로그인 페이지 이동
+            </button>
+          </Links>
         </Container>
       </ThemeProvider>
     </>

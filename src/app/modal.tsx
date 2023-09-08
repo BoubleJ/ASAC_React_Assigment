@@ -2,6 +2,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useContext } from 'react';
+import { Context1 } from '@/app/ModalContext';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -16,6 +20,9 @@ const style = {
 };
 
 export default function Modal2(props) {
+  const router = useRouter();
+  const { state, dispatch } = useContext(Context1);
+
   return (
     <>
       <div>
@@ -27,13 +34,32 @@ export default function Modal2(props) {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {props.text}
+              {state.title}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <h5>입력에 오류가 있습니다.</h5>
+              <h5>{state.description}</h5>
             </Typography>
-            <Button onClick={props.onClose}>확인</Button>
-            <Button onClick={props.onClose}>취소</Button>
+
+            <Button
+              onClick={() => {
+                if (state.title !== '가입성공') {
+                  props.onClose();
+                } else if (state.title === '가입성공') {
+                  props.onClose();
+                  router.push('/login');
+                }
+              }}
+            >
+              확인
+            </Button>
+
+            <Button
+              onClick={() => {
+                props.onClose();
+              }}
+            >
+              취소
+            </Button>
           </Box>
         </Modal>
       </div>
