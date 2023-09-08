@@ -123,7 +123,7 @@ export function SignIn() {
                 required: '비밀번호는 필수 입력입니다.',
                 minLength: {
                   value: 8,
-                  message: '8자리 이상 비밀번호를 사용하세요.',
+                  message: '비밀번호를 8자리 이상 입력하세요.',
                 },
                 pattern: {
                   value:
