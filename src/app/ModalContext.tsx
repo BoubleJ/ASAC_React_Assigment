@@ -62,13 +62,7 @@ export default function ModalProvider({ children }) {
     <>
       <Context1.Provider value={{ state, dispatch }}>
         {children}
-        <Modal2
-          open={state.open}
-          title={state.title}
-          onClose={() => {
-            dispatch({ type: 'close' });
-          }}
-        />
+        <Modal2 />
       </Context1.Provider>
     </>
   );

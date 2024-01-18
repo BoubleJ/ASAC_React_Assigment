@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+
+import { useState, useRef, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -14,45 +15,57 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Links from 'next/link';
 import { useContext } from 'react';
 import { Context1 } from '@/app/ModalContext';
-import { defaultTheme, Copyright } from './page';
+
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
+
+// TODO remove, this demo shouldn't need to reset the theme.
+const defaultTheme = createTheme();
 
 export function SignIn() {
   const { state, dispatch } = useContext(Context1);
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-
-  const onChangeId = React.useCallback(e => {
-    setId(e.target.value);
-  });
-
-  const onChangePW = React.useCallback(e => {
-    setPassword(e.target.value);
-  });
-
-  const handleLogin = () => {
-    if (id != 'helloworld@naver.com') {
-      dispatch({ type: 'Id_wrong' });
-      console.log(id);
-    } else if (password != 'Qwer!234') {
-      dispatch({ type: 'PW_wrong' });
-    }
-  };
 
   const onSubmit = data => {
-    if (data.email === 'helloworld@naver.com' && data.password === 'Qwer!234') {
-      console.log('success');
-      dispatch({ type: 'login_success' });
+    console.log('success');
+    dispatch({ type: 'login_success' });
+  };
+
+  const onError = data => {
+    if (data.email.ref.value != 'helloworld@naver.com') {
+      dispatch({ type: 'Id_wrong' });
+      // console.log(data);
+    } else if (data.password.ref.value != 'Qwer!234') {
+      dispatch({ type: 'PW_wrong' });
+      // console.log(data);
     }
   };
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, isSubmitted, errors },
-  } = useForm();
+  } = useForm({
+    reValidateMode: 'onChange',
+  });
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -74,7 +87,7 @@ export function SignIn() {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit, onError)}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -84,9 +97,9 @@ export function SignIn() {
               fullWidth
               label="Email Address"
               name="email"
-              value={id}
+              id="email"
+              placeholder="helloworld@naver.com"
               autoComplete="email"
-              onChange={onChangeId}
               autoFocus
               aria-invalid={
                 isSubmitted ? (errors.email ? 'true' : 'false') : undefined
@@ -104,10 +117,11 @@ export function SignIn() {
               margin="normal"
               required
               fullWidth
+              placeholder="Qwer!234"
+              id="password"
               name="password"
               label="Password"
               type="password"
-              onChange={onChangePW}
               autoComplete="current-password"
               aria-invalid={
                 isSubmitted ? (errors.password ? 'true' : 'false') : undefined
@@ -116,7 +130,7 @@ export function SignIn() {
                 required: '비밀번호는 필수 입력입니다.',
                 minLength: {
                   value: 8,
-                  message: '8자리 이상 비밀번호를 사용하세요.',
+                  message: '비밀번호를 8자리 이상 입력하세요.',
                 },
                 pattern: {
                   value:
@@ -138,7 +152,6 @@ export function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleLogin}
             >
               Sign In
             </Button>
@@ -164,5 +177,13 @@ export function SignIn() {
         </Links>
       </Container>
     </ThemeProvider>
+  );
+}
+
+export default function Home() {
+  return (
+    <div>
+      <SignIn></SignIn>
+    </div>
   );
 }

@@ -19,16 +19,19 @@ const style = {
   p: 4,
 };
 
-export default function Modal2(props) {
+export default function Modal2() {
   const router = useRouter();
   const { state, dispatch } = useContext(Context1);
+  const close_modal = () => {
+    dispatch({ type: 'close' });
+  };
 
   return (
     <>
       <div>
         <Modal
-          open={props.open}
-          onClose={props.onClose}
+          open={state.open}
+          onClose={close_modal}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -43,9 +46,9 @@ export default function Modal2(props) {
             <Button
               onClick={() => {
                 if (state.title !== '가입성공') {
-                  props.onClose();
+                  close_modal();
                 } else if (state.title === '가입성공') {
-                  props.onClose();
+                  close_modal();
                   router.push('/login');
                 }
               }}
@@ -53,13 +56,7 @@ export default function Modal2(props) {
               확인
             </Button>
 
-            <Button
-              onClick={() => {
-                props.onClose();
-              }}
-            >
-              취소
-            </Button>
+            <Button onClick={close_modal}>취소</Button>
           </Box>
         </Modal>
       </div>
